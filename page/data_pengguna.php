@@ -111,9 +111,9 @@ if (isset($_GET['keyword'])) {
                 echo "<td>{$row['level']}</td>";
                 echo "<td>{$row['alamat']}</td>";
                 echo "<td>
-                        <a href='#' onclick='editUser({$row['id_login']})'>Edit</a>
-                        <a href='?action=hapus&id={$row['id_login']}'>Hapus</a>
-                      </td>";
+                    <a href='./crud/edit_user.php?id={$row['id_login']}'>Edit</a>
+                    <a href='?action=hapus&id={$row['id_login']}'>Hapus</a>
+                </td>";
                 echo "</tr>";
             }
             ?>

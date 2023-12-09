@@ -14,7 +14,7 @@ if (!isset($_SESSION['login'])) {
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to Library Dashboard</h1>
+    <h1>Welcome to Library - Dashboard</h1>
     <ul>
         <li><a href="page/data_pengguna.php">Data Pengguna</a></li>
         <li><a href="page/data_buku.php">Data Buku</a></li>

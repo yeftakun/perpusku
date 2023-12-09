@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tgl_lahir = DateTime::createFromFormat('d/m/Y', $tgl_lahir)->format('Y-m-d');
 
     // Insert data ke database
-    $queryInsert = "INSERT INTO tbl_login (nama, tempat_lahir, tgl_lahir, user, pass, level, jenkel, telepon, email, alama)
+    $queryInsert = "INSERT INTO tbl_login (nama, tempat_lahir, tgl_lahir, user, pass, level, jenkel, telepon, email, alamat)
                     VALUES ('$nama', '$tempat_lahir', '$tgl_lahir', '$username', '$password', '$level', '$jenkel', '$telepon', '$email', '$alamat')";
 
     if ($conn->query($queryInsert) === TRUE) {
