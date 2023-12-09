@@ -10,7 +10,7 @@ if (!isset($_SESSION['login'])) {
 function searchUsers($keyword, $conn)
 {
     $query = "SELECT * FROM tbl_login 
-              WHERE anggota_id LIKE '%$keyword%' OR 
+              WHERE id_login LIKE '%$keyword%' OR 
                     nama LIKE '%$keyword%' OR 
                     user LIKE '%$keyword%' OR 
                     jenkel LIKE '%$keyword%' OR 
@@ -22,17 +22,24 @@ function searchUsers($keyword, $conn)
 }
 
 // Tambah user
-if (isset($_POST['tambah_user'])) {
+// if (isset($_POST['tambah_user'])) {
     // Proses penambahan user
     // ...
     // Redirect atau berikan pesan sukses
-}
+// }
 
 // Hapus user
 if (isset($_GET['action']) && $_GET['action'] == 'hapus' && isset($_GET['id'])) {
+    $idToDelete = $_GET['id'];
+    
     // Proses penghapusan user
-    // ...
-    // Redirect atau berikan pesan sukses
+    $queryDelete = "DELETE FROM tbl_login WHERE id_login = $idToDelete";
+
+    if ($conn->query($queryDelete) === TRUE) {
+        header("location:data_pengguna.php?delete_success=true");
+    } else {
+        echo "Error: " . $queryDelete . "<br>" . $conn->error;
+    }
 }
 
 // Ambil data pengguna
