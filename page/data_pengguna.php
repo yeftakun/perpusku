@@ -67,12 +67,26 @@ if (isset($_GET['keyword'])) {
 
     <div>
         <!-- Search Box -->
-        <form method="get" action="">
+        <!-- <form method="get" action="">
             <label>Cari: 
                 <input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
             </label>
             <input type="submit" value="Cari">
+        </form> -->
+        <form method="get" action="">
+            <label>Cari: 
+                <input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
+                <button type="button" onclick="clearSearch()">✖</button>
+            </label>
+            <input type="submit" value="Cari">
         </form>
+
+        <script>
+            function clearSearch() {
+                document.querySelector('input[name="keyword"]').value = '';
+            }
+        </script>
+
     </div>
 
     <table border="1">
