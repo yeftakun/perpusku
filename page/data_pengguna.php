@@ -57,19 +57,16 @@ if (isset($_GET['keyword'])) {
     <h1>Data Pengguna</h1>
     
     <div>
-        <!-- Tambah User -->
-        <a href="#" onclick="showForm()">Tambah User</a>
-        <div id="formTambahUser" style="display:none;">
-            <!-- Form tambah user -->
-            <!-- ... -->
-        </div>
+    <!-- Tambah User -->
+        <a href="crud/tambah_user.php">Tambah User</a>
     </div>
+
 
     <div>
         <!-- Search Box -->
         <!-- <form method="get" action="">
             <label>Cari: 
-                <input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
+                <input type="text" name="keyword" value="
             </label>
             <input type="submit" value="Cari">
         </form> -->
@@ -106,7 +103,7 @@ if (isset($_GET['keyword'])) {
             <?php
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>{$row['anggota_id']}</td>";
+                echo "<td>A{$row['id_login']}</td>";
                 echo "<td>{$row['nama']}</td>";
                 echo "<td>{$row['user']}</td>";
                 echo "<td>{$row['jenkel']}</td>";
