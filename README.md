@@ -5,3 +5,4 @@
 3. buka chrome: localhost/perpusku
 
 usrname:yefta | pass:123 | petugas
+usrname:kirito | pass:123 | anggota

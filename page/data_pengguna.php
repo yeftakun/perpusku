@@ -54,7 +54,17 @@ if (isset($_GET['keyword'])) {
     <title>Data Pengguna</title>
 </head>
 <body>
-    <h1>Data Pengguna</h1>
+    <h1><a href="..\dash_petugas.php">Welcome to Library - Data Pengguna</a></h1>
+    <ul>
+        <li><a href="data_pengguna.php">Data Pengguna</a></li>
+        <li><a href="data_buku.php">Data Buku</a></li>
+        <li><a href="kategori.php">Kategori</a></li>
+        <li><a href="rak.php">Rak</a></li>
+        <li><a href="peminjaman.php">Peminjaman</a></li>
+        <li><a href="pengembalian.php">Pengembalian</a></li>
+        <li><a href="denda.php">Denda</a></li>
+        <li><a href="..\logout.php">Logout</a></li>
+    </ul>
     
     <div>
     <!-- Tambah User -->
