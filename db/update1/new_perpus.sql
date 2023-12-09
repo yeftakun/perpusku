@@ -169,7 +169,7 @@ CREATE TABLE `tbl_login` (
 
 LOCK TABLES `tbl_login` WRITE;
 /*!40000 ALTER TABLE `tbl_login` DISABLE KEYS */;
-INSERT INTO `tbl_login` VALUES (1,'yefta','123','Petugas','Yefta Yosia Asyel','Pati','2004/05/30','Laki-laki','Manado','082325','yefta@gmail.com');
+INSERT INTO `tbl_login` VALUES (1,'yefta','123','Petugas','Yefta Yosia Asyel','Manado','2004-05-30','Laki-laki','Manado','082325','yefta@gmail.com');
 /*!40000 ALTER TABLE `tbl_login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-09 18:45:11
+-- Dump completed on 2023-12-09 20:54:48
