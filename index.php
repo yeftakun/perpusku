@@ -1,8 +1,20 @@
 <?php
 include("koneksi.php");
 session_start();
-if (!isset($_SESSION['login'])) {
-    header('location:login.php');
+
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $query = "SELECT * FROM tbl_login WHERE user='$username' AND pass='$password'";
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        $_SESSION['login'] = true;
+        header('location:dash_petugas.php');
+    } else {
+        echo "Login failed. Please check your username and password.";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -11,19 +23,14 @@ if (!isset($_SESSION['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Login</title>
 </head>
 <body>
-    <h1>Welcome to Library - Dashboard</h1>
-    <ul>
-        <li><a href="page/data_pengguna.php">Data Pengguna</a></li>
-        <li><a href="page/data_buku.php">Data Buku</a></li>
-        <li><a href="page/kategori.php">Kategori</a></li>
-        <li><a href="page/rak.php">Rak</a></li>
-        <li><a href="page/peminjaman.php">Peminjaman</a></li>
-        <li><a href="page/pengembalian.php">Pengembalian</a></li>
-        <li><a href="page/denda.php">Denda</a></li>
-        <li><a href="logout.php">Logout</a></li>
-    </ul>
+    <h1>Login</h1>
+    <form method="post" action="">
+        <label>Username: <input type="text" name="username" required></label><br>
+        <label>Password: <input type="password" name="password" required></label><br>
+        <input type="submit" name="login" value="Login">
+    </form>
 </body>
 </html>
