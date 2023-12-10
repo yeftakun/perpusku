@@ -9,34 +9,22 @@ if (!isset($_SESSION['login'])) {
 // Fungsi untuk mencari data berdasarkan filter
 function searchUsers($keyword, $conn)
 {
-    $query = "SELECT * FROM tbl_login 
-              WHERE id_login LIKE '%$keyword%' OR 
-                    nama LIKE '%$keyword%' OR 
-                    user LIKE '%$keyword%' OR 
-                    jenkel LIKE '%$keyword%' OR 
-                    telepon LIKE '%$keyword%' OR 
-                    level LIKE '%$keyword%' OR 
-                    alamat LIKE '%$keyword%'";
+    $query = "SELECT * FROM tbl_kategori 
+              WHERE id_kategori LIKE '%$keyword%' OR 
+                    nama_kategori LIKE '%$keyword%'";
     $result = $conn->query($query);
     return $result;
 }
 
-// Tambah user
-// if (isset($_POST['tambah_user'])) {
-    // Proses penambahan user
-    // ...
-    // Redirect atau berikan pesan sukses
-// }
-
-// Hapus user
+// Hapus kategori
 if (isset($_GET['action']) && $_GET['action'] == 'hapus' && isset($_GET['id'])) {
     $idToDelete = $_GET['id'];
-    
-    // Proses penghapusan user
-    $queryDelete = "DELETE FROM tbl_login WHERE id_login = $idToDelete";
+
+    // Proses penghapusan buku
+    $queryDelete = "DELETE FROM tbl_kategori WHERE id_kategori = $idToDelete";
 
     if ($conn->query($queryDelete) === TRUE) {
-        header("location:data_pengguna.php?delete_success=true");
+        header("location:kategori.php?delete_success=true");
     } else {
         echo "Error: " . $queryDelete . "<br>" . $conn->error;
     }
@@ -47,7 +35,7 @@ if (isset($_GET['keyword'])) {
     $keyword = $_GET['keyword'];
     $result = searchUsers($keyword, $conn);
 } else {
-    $query = "SELECT * FROM tbl_login";
+    $query = "SELECT * FROM tbl_kategori";
     $result = $conn->query($query);
 }
 ?>
@@ -58,10 +46,10 @@ if (isset($_GET['keyword'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pengguna</title>
+    <title>Kategori Buku</title>
 </head>
 <body>
-    <h1>Welcome to Library - Data Pengguna</h1>
+    <h1>Welcome to Library - Kategori Buku</h1>
     <ul>
         <li><a href="..\dash_petugas.php">Dashboard</a></li>
         <li><a href="data_pengguna.php">Data Pengguna</a></li>
@@ -75,18 +63,12 @@ if (isset($_GET['keyword'])) {
     
     <div>
     <!-- Tambah User -->
-        <a href="crud/tambah_user.php">Tambah User</a>
+        <a href="crud/tambah_kategori.php">Tambah Kategori</a>
     </div>
 
 
     <div>
         <!-- Search Box -->
-        <!-- <form method="get" action="">
-            <label>Cari: 
-                <input type="text" name="keyword" value="
-            </label>
-            <input type="submit" value="Cari">
-        </form> -->
         <form method="get" action="">
             <label>Cari: 
                 <input type="text" name="keyword" value="<?php echo isset($_GET['keyword']) ? $_GET['keyword'] : ''; ?>">
@@ -107,29 +89,18 @@ if (isset($_GET['keyword'])) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nama</th>
-                <th>User</th>
-                <th>Jenis Kelamin</th>
-                <th>Telepon</th>
-                <th>Level</th>
-                <th>Alamat</th>
-                <th>Aksi</th>
+                <th>Kategori</th>
             </tr>
         </thead>
         <tbody>
             <?php
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>A{$row['id_login']}</td>";
-                echo "<td>{$row['nama']}</td>";
-                echo "<td>{$row['user']}</td>";
-                echo "<td>{$row['jenkel']}</td>";
-                echo "<td>{$row['telepon']}</td>";
-                echo "<td>{$row['level']}</td>";
-                echo "<td>{$row['alamat']}</td>";
+                echo "<td>K{$row['id_kategori']}</td>";
+                echo "<td>{$row['nama_kategori']}</td>";
                 echo "<td>
-                    <a href='./crud/edit_user.php?id={$row['id_login']}'>Edit</a>
-                    <a href='?action=hapus&id={$row['id_login']}'>Hapus</a>
+                    <a href='./crud/edit_kategori.php?id={$row['id_kategori']}'>Edit</a>
+                    <a href='?action=hapus&id={$row['id_kategori']}'>Hapus</a>
                 </td>";
                 echo "</tr>";
             }
@@ -141,12 +112,6 @@ if (isset($_GET['keyword'])) {
         function showForm() {
             var formTambahUser = document.getElementById('formTambahUser');
             formTambahUser.style.display = 'block';
-        }
-
-        function editUser(userId) {
-            // Proses pengeditan user
-            // ...
-            // Redirect atau tampilkan form edit user
         }
     </script>
 </body>
