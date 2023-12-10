@@ -7,9 +7,9 @@ if (!isset($_SESSION['login'])) {
 }
 
 // Fungsi untuk mencari data berdasarkan filter
-function searchPinjaman($keyword, $conn)
+function searchPeminjaman($keyword, $conn)
 {
-    $query = "SELECT p.id_pinjam, l.nama, b.title, b.sampul, p.status, p.tgl_pinjam, p.lama_pinjam, p.tgl_balik, p.tgl_kembali
+    $query = "SELECT p.id_pinjam, l.nama, b.title, b.sampul, p.status, p.tgl_pinjam, p.lama_pinjam, p.tgl_balik, p.tgl_kembali, p.denda
               FROM tbl_pinjam p
               JOIN tbl_login l ON p.id_login = l.id_login
               JOIN tbl_buku b ON p.id_buku = b.id_buku
@@ -20,20 +20,21 @@ function searchPinjaman($keyword, $conn)
                     p.tgl_pinjam LIKE '%$keyword%' OR 
                     p.lama_pinjam LIKE '%$keyword%' OR 
                     p.tgl_balik LIKE '%$keyword%' OR 
-                    p.tgl_kembali LIKE '%$keyword%'";
+                    p.tgl_kembali LIKE '%$keyword%' OR 
+                    p.denda LIKE '%$keyword%'";
     $result = $conn->query($query);
     return $result;
 }
 
-// Hapus peminjaman
+// Hapus data peminjaman
 if (isset($_GET['action']) && $_GET['action'] == 'hapus' && isset($_GET['id'])) {
     $idToDelete = $_GET['id'];
 
-    // Proses penghapusan peminjaman
+    // Proses penghapusan data peminjaman
     $queryDelete = "DELETE FROM tbl_pinjam WHERE id_pinjam = $idToDelete";
 
     if ($conn->query($queryDelete) === TRUE) {
-        header("location:peminjaman.php?delete_pinjam=true");
+        header("location:data_pinjam.php?delete_success=true");
     } else {
         echo "Error: " . $queryDelete . "<br>" . $conn->error;
     }
@@ -42,9 +43,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'hapus' && isset($_GET['id'])) 
 // Ambil data peminjaman
 if (isset($_GET['keyword'])) {
     $keyword = $_GET['keyword'];
-    $result = searchPinjaman($keyword, $conn);
+    $result = searchPeminjaman($keyword, $conn);
 } else {
-    $query = "SELECT p.id_pinjam, l.nama, b.title, b.sampul, p.status, p.tgl_pinjam, p.lama_pinjam, p.tgl_balik, p.tgl_kembali
+    $query = "SELECT p.id_pinjam, l.nama, b.title, b.sampul, p.status, p.tgl_pinjam, p.lama_pinjam, p.tgl_balik, p.tgl_kembali, p.denda
               FROM tbl_pinjam p
               JOIN tbl_login l ON p.id_login = l.id_login
               JOIN tbl_buku b ON p.id_buku = b.id_buku";
@@ -72,12 +73,12 @@ if (isset($_GET['keyword'])) {
         <li><a href="denda.php">Denda</a></li>
         <li><a href="../logout.php">Logout</a></li>
     </ul>
-    
-    <!-- Tambahkan tombol untuk menambah peminjaman -->
+
     <div>
+    <!-- Tambah User -->
         <a href="crud/tambah_peminjaman.php">Tambah Peminjaman</a>
     </div>
-
+    
     <div>
         <form method="get" action="">
             <label>Cari: 
@@ -97,17 +98,17 @@ if (isset($_GET['keyword'])) {
     <table border="1">
         <thead>
             <tr>
-                <th>ID Peminjaman</th>
+                <th>ID Pinjam</th>
                 <th>Nama Peminjam</th>
                 <th>Judul Buku</th>
-                <th>Sampul Buku</th>
+                <th>Sampul</th>
                 <th>Status</th>
                 <th>Tanggal Pinjam</th>
-                <th>Lama Pinjam (hari)</th>
-                <th>Tanggal Balik</th>
+                <th>Lama Pinjam</th>
+                <th>Tanggal Balik (Deadline)</th>
                 <th>Tanggal Kembali</th>
                 <th>Denda</th>
-                <th>Action</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -127,7 +128,6 @@ if (isset($_GET['keyword'])) {
                 echo "<td>{$row['tgl_kembali']}</td>";
                 echo "<td>{$row['denda']}</td>";
                 echo "<td>
-                    <a href='crud/edit_peminjaman.php?id={$row['id_pinjam']}'>Edit</a>
                     <a href='?action=hapus&id={$row['id_pinjam']}'>Hapus</a>
                 </td>";
                 echo "</tr>";
@@ -137,7 +137,16 @@ if (isset($_GET['keyword'])) {
     </table>
 
     <script>
-        // Fungsi-fungsi JavaScript jika diperlukan
+        function showForm() {
+            var formTambahBuku = document.getElementById('formTambahBuku');
+            formTambahBuku.style.display = 'block';
+        }
+
+        function editBuku(bukuId) {
+            // Proses pengeditan buku
+            // ...
+            // Redirect atau tampilkan form edit buku
+        }
     </script>
 </body>
 </html>
