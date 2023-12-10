@@ -113,12 +113,18 @@ if (isset($_GET['keyword'])) {
                 <th>Telepon</th>
                 <th>Level</th>
                 <th>Alamat</th>
+                <th>TTL</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             <?php
             while ($row = $result->fetch_assoc()) {
+                    // Ubah format tgl_lahir
+                    $formatted_tgl_lahir = date('d-m-Y', strtotime($row['tgl_lahir']));
+                
+                    // Gabungkan tempat_lahir dan tgl_lahir
+                    $tempat_tgl_lahir = "{$row['tempat_lahir']}, {$formatted_tgl_lahir}";
                 echo "<tr>";
                 echo "<td>A{$row['id_login']}</td>";
                 echo "<td>{$row['nama']}</td>";
@@ -127,6 +133,7 @@ if (isset($_GET['keyword'])) {
                 echo "<td>{$row['telepon']}</td>";
                 echo "<td>{$row['level']}</td>";
                 echo "<td>{$row['alamat']}</td>";
+                echo "<td>{$tempat_tgl_lahir}</td>";
                 echo "<td>
                     <a href='./crud/edit_user.php?id={$row['id_login']}'>Edit</a>
                     <a href='?action=hapus&id={$row['id_login']}'>Hapus</a>

@@ -3,47 +3,46 @@ include("../../koneksi.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Proses update kategori
-    $id_kategori = $_POST['id_kategori'];
+    $id = $_POST['id']; // ID kategori yang akan diupdate
     $nama_kategori = $_POST['nama_kategori'];
 
-    // Update data buku di database
+    // Update data di database
     $queryUpdate = "UPDATE tbl_kategori 
-                    SET nama_kategori='$nama_kategori';
-                    WHERE id_kategori='$id_kategori'";
+                    SET nama_kategori='$nama_kategori'
+                    WHERE id_kategori='$id'";
 
     if ($conn->query($queryUpdate) === TRUE) {
         header("location:../kategori.php?update_success=true");
     } else {
         echo "Error: " . $queryUpdate . "<br>" . $conn->error;
     }
-} elseif (isset($_GET['id_kategori'])) {
+} elseif (isset($_GET['id'])) {
+    // Ambil data kategori berdasarkan ID untuk ditampilkan di form edit
+    $id = $_GET['id'];
+    $queryGetKategori = "SELECT * FROM tbl_kategori WHERE id_kategori='$id'";
+    $resultGetKategori = $conn->query($queryGetKategori);
 
-    // Ambil data buku berdasarkan ID untuk ditampilkan di form edit
-    $id_kategori = $_GET['id_kategori'];
-    $queryGetBuku = "SELECT * FROM tbl_kategori WHERE id_kategori='$id_kategori'";
-    $resultGetBuku = $conn->query($queryGetBuku);
-
-    if ($resultGetBuku->num_rows > 0) {
-        $bukuData = $resultGetBuku->fetch_assoc();
+    if ($resultGetKategori->num_rows > 0) {
+        $kategoriData = $resultGetKategori->fetch_assoc();
     } else {
         echo "Kategori not found";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Buku</title>
+    <title>Edit Kategori</title>
 </head>
 <body>
-    <h1>Edit Buku</h1>
+    <h1>Edit Kategori</h1>
     
-    <form method="post" action="" enctype="multipart/form-data">
-        <label>Kategori: <input type="text" name="nama_kategori" value="<?php echo $bukuData['nama_kategori']; ?>" required></label><br>
+    <form method="post" action="">
+        <input type="hidden" name="id" value="<?php echo $kategoriData['id_kategori']; ?>">
+        <label>Nama Kategori: <input type="text" name="nama_kategori" value="<?php echo $kategoriData['nama_kategori']; ?>" required></label><br>
         <input type="submit" value="Submit">
     </form>
 

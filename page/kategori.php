@@ -6,6 +6,21 @@ if (!isset($_SESSION['login'])) {
     header('location:../login.php');
 }
 
+// Proses penambahan kategori
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nama_kategori = $_POST['nama_kategori'];
+
+    // Insert data ke database
+    $queryInsert = "INSERT INTO tbl_kategori (nama_kategori) VALUES ('$nama_kategori')";
+
+    if ($conn->query($queryInsert) === TRUE) {
+        $last_id = $conn->insert_id;
+        header("location:kategori.php?new_id=$last_id");
+    } else {
+        echo "Error: " . $queryInsert . "<br>" . $conn->error;
+    }
+}
+
 // Fungsi untuk mencari data berdasarkan filter
 function searchUsers($keyword, $conn)
 {
@@ -40,6 +55,8 @@ if (isset($_GET['keyword'])) {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,11 +78,13 @@ if (isset($_GET['keyword'])) {
         <li><a href="..\logout.php">Logout</a></li>
     </ul>
     
+    <!-- Tambah Kategori -->
     <div>
-    <!-- Tambah User -->
-        <a href="crud/tambah_kategori.php">Tambah Kategori</a>
+        <form method="post" action="">
+            <label>Nama Kategori: <input type="text" name="nama_kategori" required></label>
+            <input type="submit" value="Tambah Kategori">
+        </form>
     </div>
-
 
     <div>
         <!-- Search Box -->
@@ -90,6 +109,7 @@ if (isset($_GET['keyword'])) {
             <tr>
                 <th>ID</th>
                 <th>Kategori</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
